@@ -1,0 +1,9 @@
+<h1>サークル一覧</h1>
+
+<%= link_to "サークル作成", new_group_path %>
+
+<% @groups.each do |group| %>
+  <p>
+    <%= link_to group.circle, group_path(group) %>
+  </p>
+<% end %>

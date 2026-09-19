@@ -1,0 +1,11 @@
+<h1><%= @group.circle %></h1>
+
+  
+<% if current_user.groups.include?(@group) %>
+  <p>参加済み</p>
+  <%= link_to "ホームへ", homes_path %>
+<% else %>
+  <%= button_to "参加",
+      group_group_users_path(@group),
+      method: :post %>
+<% end %>

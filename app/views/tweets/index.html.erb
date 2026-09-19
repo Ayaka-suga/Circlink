@@ -1,0 +1,126 @@
+<%= stylesheet_link_tag 'index', :media => "all" %>
+
+<div class="main-content">
+  <% if @current_group %>
+    <!-- 1. ページヘッダー（選択中のサークル情報のみ表示） -->
+    <div class="page-header">
+  <div class="header-left">
+    <h2 class="page-title">イベント一覧</h2>
+    
+
+  </div>
+
+  <div class="header-actions">
+    <div class="btn-create-event">
+      <%= link_to "＋ イベント作成", new_tweet_path, class: "btn-create" %>
+    </div>
+  </div>
+</div>
+    <!-- 2. タブ & フィルター -->
+    <div class="filter-section">
+      <div class="tab-menu">
+        <%= link_to "今後のイベント", tweets_path(tab: "upcoming", keyword: params[:keyword], category: params[:category]), class: "tab-item #{'active' unless params[:tab] == 'past'}" %>
+        <%= link_to "過去のイベント", tweets_path(tab: "past", keyword: params[:keyword], category: params[:category]), class: "tab-item #{'active' if params[:tab] == 'past'}" %>
+      </div>
+
+      <div class="filter-bar">
+        <%= form_with url: tweets_path, method: :get, local: true, class: "filter-form" do |f| %>
+          <%= f.hidden_field :tab, value: params[:tab] %>
+          
+          <div class="search-box">
+            <%= f.text_field :keyword, value: params[:keyword], placeholder: "イベント名で検索", class: "input-search" %>
+          </div>
+
+          <div class="select-box">
+            <%= f.select :category, [["すべてのカテゴリ", ""], ["通常活動", "通常活動"], ["イベント・行事", "イベント・行事"], ["その他", "その他"]], { selected: params[:category] }, { onchange: "this.form.submit();", class: "select-category" } %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- 3. イベントカード一覧 -->
+    <div class="event-card-list">
+      <% if @tweets.present? %>
+        <% @tweets.each do |t| %>
+          <% my_like = t.likes.find_by(user_id: current_user.id) if user_signed_in? %>
+          <% is_past_deadline = t.deadline.present? && Time.current > t.deadline %>
+
+          <div class="event-card">
+            <!-- 左側：画像と詳細情報 -->
+            <div class="card-left">
+              <div class="event-image-placeholder">
+                <% if t.respond_to?(:image) && t.image.attached? %>
+                  <%= image_tag t.image, class: "event-img" %>
+                <% else %>
+                  <div class="no-image-text">画像</div>
+                <% end %>
+              </div>
+
+              <div class="event-details">
+                <div class="event-title-row">
+                  <span class="event-name"><%= t.event %></span>
+                  <span class="tag-category"><%= t.category %></span>
+
+                  <% if my_like %>
+                    <span class="tag-status-answered"><%= my_like.status %></span>
+                  <% else %>
+                    <span class="tag-status-unanswered">未回答</span>
+                  <% end %>
+                </div>
+
+                <div class="meta-info">
+                  📅 <% if t.start_time %>
+                    <%= t.start_time.strftime("%m月%d日 %H:%M") %> 〜 <%= t.end_time&.strftime("%H:%M") %>
+                  <% else %>
+                    日時未定
+                  <% end %>
+                </div>
+
+                <div class="meta-info">
+                  📍 <%= t.place.presence || "場所未定" %>
+                </div>
+
+                <% if t.about.present? %>
+                  <p class="event-description"><%= truncate(t.about, length: 40) %></p>
+                <% end %>
+              </div>
+            </div>
+
+            <!-- 右側：出欠回答ボックスと矢印 -->
+            <div class="card-right">
+              <div class="attendance-box">
+                <div class="attendance-title">出欠回答</div>
+                <div class="attendance-count">
+                  <strong><%= t.likes.where(status: "参加").count %>人</strong> / <%= @current_group.users.count %>人
+                </div>
+
+                <div class="attendance-deadline">
+                  締切: <%= t.deadline ? t.deadline.strftime("%m/%d %H:%M") : "なし" %>
+                </div>
+
+                <% if is_past_deadline %>
+                  <span class="btn-answer disabled">受付終了</span>
+                <% else %>
+                  <%= link_to "出欠回答する", tweet_path(t.id), class: "btn-answer" %>
+                <% end %>
+              </div>
+
+              <div class="arrow-link-container">
+                <%= link_to tweet_path(t.id), class: "arrow-link", title: "詳細を見る" do %>
+                  ＞
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <p class="no-data-text">該当するイベントはありません。</p>
+      <% end %>
+    </div>
+
+  <% else %>
+    <div class="no-group-container">
+      <p>サークルに所属していません。</p>
+    </div>
+  <% end %>
+</div>

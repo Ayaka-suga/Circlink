@@ -1,0 +1,314 @@
+/* コンテナ全体のベース設定 */
+.show-container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 20px 16px 80px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #333;
+}
+
+/* 戻るボタン */
+.top-nav {
+  margin-bottom: 16px;
+}
+.btn-back {
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* イベント概要カード */
+.event-summary-card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.tag-category {
+  background-color: #e6f7ff;
+  color: #096dd9;
+  border: 1px solid #91d5ff;
+  font-size: 12px;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.tag-status {
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-weight: bold;
+}
+.tag-status.unanswered {
+  background-color: #fff7e6;
+  color: #fa8c16;
+  border: 1px solid #ffd591;
+}
+.tag-status.answered {
+  background-color: #f6ffed;
+  color: #52c41a;
+  border: 1px solid #b7eb8f;
+}
+
+.event-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin: 8px 0 12px;
+}
+
+.meta-row {
+  font-size: 14px;
+  color: #555;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.deadline-row {
+  font-size: 13px;
+  color: #888;
+  text-align: right;
+  border-top: 1px dashed #eee;
+  padding-top: 10px;
+}
+
+/* 出欠選択フォームカード */
+.form-card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.form-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.badge-required {
+  background-color: #ff4d4f;
+  color: #fff;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+/* 3択オプションカード (ラジオボタン) */
+.option-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-card {
+  position: relative;
+  cursor: pointer;
+  border: 2px solid #e8e8e8;
+  border-radius: 12px;
+  padding: 16px 8px;
+  text-align: center;
+  transition: all 0.2s ease;
+  background-color: #fafafa;
+}
+
+.radio-input {
+    display: none;
+}
+
+/* 画像アイコンのサイズ調整 */
+.status-icon {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  margin-bottom: 8px;
+}
+
+.option-label {
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  color: #444;
+}
+
+/* 選択時のスタイリング */
+.option-card:has(.radio-input:checked) {
+  background-color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.option-join:has(.radio-input:checked) {
+  border-color: #0099ff;
+  color: #0099ff;
+}
+
+.option-maybe:has(.radio-input:checked) {
+  border-color: #ff9900;
+  color: #ff9900;
+}
+
+.option-decline:has(.radio-input:checked) {
+  border-color: #52c41a;
+  color: #52c41a;
+}
+
+/* コメントエリア */
+.comment-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.comment-label {
+  font-size: 14px;
+  color: #666;
+}
+
+.comment-textarea {
+  width: 100%;
+  height: 80px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+/* 下部アクションボタン */
+.form-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.btn-cancel {
+  display: inline-block;
+  padding: 12px 32px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  color: #666;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 15px;
+  text-align: center;
+}
+
+.btn-submit {
+  padding: 12px 48px;
+  background-color: #0099ff;
+  border: none;
+  border-radius: 8px;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-submit:hover {
+  background-color: #0077cc;
+}
+
+/* 詳細＆一覧セクション */
+.details-section, .members-section {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.sub-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 12px;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 6px;
+}
+
+.details-body {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #444;
+}
+
+.member-lists {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.member-group h4 {
+  font-size: 13px;
+  margin: 0 0 8px;
+  color: #666;
+}
+
+.member-group ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 13px;
+}
+
+.member-group li {
+  padding: 4px 0;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+/* 投稿者ボタン */
+.owner-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.btn-edit, .btn-delete {
+  font-size: 13px;
+  text-decoration: none;
+  color: #888;
+}
+
+.btn-delete {
+  color: #ff4d4f;
+}
+
+.closed-banner {
+  background-color: #fff2f0;
+  border: 1px solid #ffccc7;
+  color: #ff4d4f;
+  padding: 16px;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 24px;
+}

@@ -1,0 +1,206 @@
+<%= stylesheet_link_tag 'home', :media => "all" %>
+
+<% if user_signed_in? %>
+  <div class="home-container">
+    <% if @my_groups.present? && @current_group.present? %>
+      <!-- 2. 挨拶 & 現在選択中のサークル表示 -->
+      <div class="welcome-section">
+        <h1 class="welcome-text">こんにちは、<%= current_user.username rescue current_user.email.split('@').first %> さん！</h1>
+      </div>
+
+      <%
+        # 選択中サークルの未回答イベント（1件目）
+        unanswered_tweet = @tweets.select { |t|
+          t.likes.find_by(user_id: current_user.id).nil? && (t.deadline.nil? || Time.current <= t.deadline)
+        }.first
+
+        # 選択中サークルの直近メインイベント（1件目）
+        next_event = @tweets.first
+      %>
+
+      <!-- 3. 未回答イベント通知アラート -->
+      <% if unanswered_tweet %>
+        <div class="alert-card">
+          <div class="alert-left">
+            <span class="badge-orange">●</span>
+            <span class="alert-title">未回答のイベント</span>
+            <span class="alert-event-name"><%= unanswered_tweet.event %></span>
+            <span class="alert-event-date">📅 <%= unanswered_tweet.start_time&.strftime("%m/%d %H:%M") || "日時未定" %></span>
+          </div>
+          <div class="alert-right">
+            <%= link_to "出欠を回答する", tweet_path(unanswered_tweet.id), class: "btn-alert-answer" %>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- 4. メインカード：選択中サークルの次のイベント -->
+      <% if next_event %>
+        <%
+          next_event_like = next_event.likes.find_by(user_id: current_user.id)
+          group_members_count = @current_group.users.count
+          group_members_count = 1 if group_members_count == 0
+          answered_users = next_event.likes.count
+          answer_rate = (answered_users.to_f / group_members_count * 100).round
+        %>
+        <div class="hero-event-card">
+          <div class="hero-left">
+            <span class="hero-label">次のイベント</span>
+            <h2 class="hero-title"><%= next_event.event %></h2>
+
+            <div class="hero-meta">
+              <div>📅 <%= next_event.start_time&.strftime("%Y年 %m月%d日 %H:%M") || "日時未定" %></div>
+              <div>📍 <%= next_event.place.presence || "場所未定" %></div>
+            </div>
+            <div class="hero-actions">
+              <%= link_to "出欠を回答する", tweet_path(next_event.id), class: "btn-primary" %>
+              <%= link_to "詳細を見る", tweet_path(next_event.id), class: "btn-secondary" %>
+            </div>
+
+            <% if next_event.respond_to?(:image) && next_event.image.attached? %>
+              <div class="event-image-wrapper">
+                <%= image_tag next_event.image, class: "event-image" %>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="hero-right">
+            <div class="attendance-header">
+              出欠回答状況
+            </div>
+
+            <div class="chart-container">
+              <div
+                class="attendance-chart"
+                style="--percentage: <%= answer_rate %>%;">
+                <div class="chart-inner">
+                  <span class="chart-status">
+                    <%= next_event_like ? "回答済み" : "未回答" %>
+                  </span>
+
+                  <span class="chart-count">
+                    <%= answered_users %>/<%= group_members_count %>人
+                  </span>
+                </div>
+              </div>
+
+              <div class="chart-legend">
+                <div>
+                  <span class="dot blue">●</span>
+                  回答済
+                </div>
+
+                <div>
+                  <span class="dot gray">●</span>
+                  未回答
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-deadline">
+              回答期限：
+              <%= next_event.deadline ? next_event.deadline.strftime("%m/%d %H:%M") : "なし" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- 5. ダッシュボード（今後のイベント ＆ カレンダー） -->
+      <div class="home-dashboard">
+        <!-- 左側：選択中サークルの今後のイベント（最大3件） -->
+        <div class="dashboard-card events-card">
+          <div class="card-header">
+            <h2 class="card-title">今後のイベント</h2>
+            <div class="see-all-link">
+              <%= link_to "すべて見る ＞", tweets_path(group_id: @current_group.id) %>
+            </div>
+          </div>
+          <div class="home-event-list">
+            <% if @tweets.present? %>
+              <% @tweets.take(3).each do |t| %>
+                <% my_like = t.likes.find_by(user_id: current_user.id) %>
+                <div class="home-event-item">
+                  <div class="event-thumb">
+                    <% if t.respond_to?(:image) && t.image.attached? %>
+                      <%= image_tag t.image, class: "thumb-img" %>
+                    <% else %>
+                      <span class="no-img-text">画像</span>
+                    <% end %>
+                  </div>
+                  <div class="event-info">
+                    <div class="event-name"><%= t.event %></div>
+                    <div class="event-meta">📅 <%= t.start_time&.strftime("%m月%d日 %H:%M") || "日時未定" %></div>
+                    <div class="event-meta">📍 <%= t.place.presence || "場所未定" %></div>
+                  </div>
+                  <div class="event-status">
+                    <%= link_to tweet_path(t.id), class: "status-btn-link" do %>
+                      <% if my_like %>
+                        <span class="status-badge answered"><%= my_like.status %></span>
+                      <% else %>
+                        <span class="status-badge unanswered">未回答</span>
+                      <% end %>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            <% else %>
+              <p class="no-data-text">予定されているイベントはありません。</p>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- 右側：選択中サークルのカレンダー -->
+        <div class="dashboard-card calendar-card">
+          <div class="card-header">
+            <h2 class="card-title">カレンダー</h2>
+            <%= link_to "すべて見る ＞", calendar_tweets_path(group_id: @current_group.id, anchor: "calendar"), class: "see-all-link" %>
+          </div>
+          <div class="home-calendar-wrapper">
+            <%= month_calendar events: @tweets do |date, tweets| %>
+              <div class="day-num"><%= date.day %></div>
+              <div class="day-events">
+                <% tweets.each do |tweet| %>
+                  <div class="mini-event-dot" title="<%= tweet.event %>"></div>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <!-- サークル未所属時の表示 -->
+      <div class="no-group-container">
+        <h2>サークルに所属していません</h2>
+        <p>新しいサークルを作成するか、既存のサークルに参加してみましょう！</p>
+      
+        <div class="no-group-actions">
+          <%= link_to "サークルを作る", new_group_path, class: "btn-primary" %>
+          <%= link_to "サークルを探す", groups_path, class: "btn-secondary" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <!-- 未ログイン状態（LP表示） -->
+  <div class="landing-container">
+    <h1 class="landing-title">
+      コミュニティの <span class="highlight-blue">イベント・活動管理</span> を<br>
+      <span class="highlight-pink">もっとラク</span> に。
+    </h1>
+    <div class="landing-cards">
+      <div class="landing-card">
+        <div class="card-icon">＋</div>
+        <h2>サークルを作る</h2>
+        <%= link_to "無料で始める ➔", new_user_registration_path, class: "btn-landing" %>
+      </div>
+      <div class="landing-card">
+        <div class="card-icon">🔍</div>
+        <h2>サークルに参加する</h2>
+        <%= link_to "サークル一覧を見る ➔", groups_path, class: "btn-landing" %>
+      </div>
+    </div>
+    <div class="about-section">
+      <h3>サイト説明</h3>
+      <p>Circlinkはサークルのイベント調整や活動記録をシンプルに管理できるサービスです。</p>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,643 @@
+.home-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+/* ホーム上部セクション全体 */
+
+.welcome-header {
+  
+  margin-bottom: 16px;
+}
+
+.welcome-text {
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+  margin: 20px 0 0 0;
+}
+
+/* 未回答アラートカード */
+.alert-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fffbe6;
+  border: 1.5px solid #ffe58f;
+  border-radius: 12px;
+  padding: 12px 20px;
+  margin-bottom: 20px;
+}
+
+.alert-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.badge-orange {
+  color: #fa8c16;
+  font-size: 14px;
+}
+
+.alert-title {
+  font-weight: bold;
+  color: #d46b08;
+  font-size: 14px;
+}
+
+.alert-event-name {
+  font-weight: bold;
+  color: #333;
+  font-size: 15px;
+}
+
+.alert-event-date {
+  font-size: 13px;
+  color: #666;
+}
+
+.btn-alert-answer {
+  background-color: #ffffff;
+  border: 1.5px solid #0099ff;
+  color: #0099ff;
+  padding: 6px 16px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 13px;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.btn-alert-answer:hover {
+  background-color: #0099ff;
+  color: #fff;
+}
+
+/* ========================================
+   次のイベントカード
+   ======================================== */
+
+.hero-event-card {
+  position: relative;
+  width: 100%;
+  min-height: 200px;
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: space-between;
+
+  background: #ffffff;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 16px;
+  padding: 24px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+
+  gap: 20px;
+
+  /* 画像をカードの外に出さない */
+  overflow: hidden;
+}
+
+
+/* 左側のイベント情報 */
+.hero-left {
+  position: relative;
+  z-index: 2;
+
+  width: 60%;
+  max-width: 60%;
+
+  display: flex;
+  flex-direction: column;
+
+  box-sizing: border-box;
+}
+
+
+/* ========================================
+   次のイベントの画像
+   ======================================== */
+
+.event-image-wrapper {
+  position: absolute;
+
+  top: 0;
+  right: -70px;
+  bottom: 0;
+
+  width: 60%;
+  height: 100%;
+
+  z-index: 1;
+
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.event-image {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  /*
+   * 左端だけ徐々に透明にする
+   * → イベント情報の背景に自然になじむ
+   */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.15) 10%,
+    rgba(0, 0, 0, 0.65) 22%,
+    black 35%,
+    black 100%
+  );
+
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.15) 10%,
+    rgba(0, 0, 0, 0.65) 22%,
+    black 35%,
+    black 100%
+  );
+}
+
+@media (max-width: 768px) {
+  .hero-event-card {
+    flex-direction: column;
+  }
+}
+
+.hero-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+.hero-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin: 0 0 12px 0;
+}
+
+.hero-meta {
+  font-size: 14px;
+  color: #555;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.btn-primary {
+  background-color: #0099ff;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.btn-secondary {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  color: #555;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* 右側：回答状況とドーナツグラフ */
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 220px;
+  border-left: 1px solid #f0f0f0;
+  padding-left: 20px;
+}
+
+@media (max-width: 768px) {
+  .hero-right {
+    border-left: none;
+    border-top: 1px solid #f0f0f0;
+    padding-left: 0;
+    padding-top: 16px;
+  }
+}
+
+.attendance-header {
+  font-size: 13px;
+  font-weight: bold;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.chart-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+/* CSSのみで描写するドーナツ型円グラフ */
+.attendance-chart {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: conic-gradient(#0099ff var(--percentage), #e0e0e0 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chart-inner {
+  width: 68px;
+  height: 68px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.chart-status {
+  font-size: 11px;
+  font-weight: bold;
+  color: #0099ff;
+}
+
+.chart-count {
+  font-size: 12px;
+  font-weight: bold;
+  color: #333;
+}
+
+.chart-legend {
+  font-size: 12px;
+  color: #666;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dot.blue { color: #0099ff; }
+.dot.gray { color: #ccc; }
+
+.hero-deadline {
+  font-size: 12px;
+  color: #888;
+}
+/* ダッシュボード全体レイアウト（2列並び） */
+.home-dashboard {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  gap: 20px;
+}
+
+/* ★超重要：コンテンツの幅に負けずに強制的50%（1:1）ずつ分ける記述 */
+.dashboard-card {
+  flex: 1 1 0;
+  min-width: 0;
+  width: 0;
+  background-color: #ffffff;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  box-sizing: border-box;
+}
+
+@media (max-width: 850px) {
+  .home-dashboard {
+    flex-direction: column;
+  }
+}
+
+
+
+/* カードヘッダー */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.see-all-link {
+  font-size: 14px;
+  font-weight: bold;
+  color: #0099ff;
+  text-decoration: none;
+}
+
+.see-all-link:hover {
+  text-decoration: underline;
+}
+
+/* イベント一覧リスト */
+
+.home-event-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.home-event-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border-radius: 12px;
+  background-color: #fcfcfc;
+  border: 1px solid #f0f0f0;
+}
+
+/* 画像枠 */
+.event-thumb {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  background-color: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  border: 1px solid #ddd;
+}
+
+.thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.no-img-text {
+  font-size: 11px;
+  color: #888;
+}
+
+/* イベント詳細情報 */
+.event-info {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.event-name {
+  font-size: 15px;
+  font-weight: bold;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+}
+
+.event-meta {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.3;
+}
+
+/* 回答ステータスバッジ（手書きスケッチ風丸ボタン） */
+.event-status {
+  flex-shrink: 0;
+}
+
+.status-btn-link {
+  text-decoration: none;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.status-badge.unanswered {
+  border: 2px solid #ff9900;
+  color: #ff9900;
+  background-color: #fff;
+}
+
+.status-badge.answered {
+  border: 2px solid #52c41a;
+  color: #52c41a;
+  background-color: #fff;
+}
+
+.no-data-text {
+  font-size: 14px;
+  color: #888;
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* カレンダーカード用調整 */
+.home-calendar-wrapper {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.home-calendar-wrapper .simple-calendar {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+/* カレンダーの実際の表 */
+.home-calendar-wrapper .simple-calendar table {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  table-layout: fixed !important;
+  border-collapse: collapse;
+  box-sizing: border-box;
+}
+
+/* 7列を均等にする */
+.home-calendar-wrapper .simple-calendar th,
+.home-calendar-wrapper .simple-calendar td {
+  width: 14.2857%;
+  box-sizing: border-box;
+}
+
+/* 曜日 */
+.home-calendar-wrapper .simple-calendar th {
+  font-size: 13px;
+  padding: 5px 0;
+  color: #666;
+  background: transparent;
+  border: none;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* 日付セル */
+.home-calendar-wrapper .simple-calendar td {
+  height: 42px;
+  padding: 2px;
+  vertical-align: top;
+  border: 1px solid #f0f0f0;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+/* 日付 */
+.home-calendar-wrapper .day-num {
+  font-size: 12px;
+  color: #444;
+}
+
+/* イベント */
+.home-calendar-wrapper .mini-event-dot {
+  width: 100%;
+  max-width: 100%;
+  height: 3px;
+  background-color: #0099ff;
+  border-radius: 2px;
+  margin-top: 2px;
+  box-sizing: border-box;
+}
+
+.home-calendar-wrapper .calendar-heading {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.home-calendar-wrapper .calendar-heading a {
+  color: #0099ff;
+  text-decoration: none;
+  margin: 0;
+  font-size: 13px;
+}
+
+/* 未ログイン状態（LP）スタイル */
+.landing-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.landing-title {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  line-height: 1.4;
+}
+
+.highlight-blue { color: #00aaff; }
+.highlight-pink { color: #ff4081; }
+
+.landing-cards {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.landing-card {
+  flex: 1;
+  min-width: 280px;
+  border: 2px solid #333;
+  border-radius: 12px;
+  padding: 30px 20px;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.card-icon {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.btn-landing {
+  display: inline-block;
+  border: 2px solid #333;
+  border-radius: 20px;
+  padding: 8px 20px;
+  color: #333;
+  font-weight: bold;
+  text-decoration: none;
+  margin-top: 10px;
+}
+
+.demo-box {
+  border: 2px solid #333;
+  border-radius: 12px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fafafa;
+  margin-bottom: 40px;
+  font-weight: bold;
+}
+
+.about-section {
+  text-align: left;
+}
+
+.no-group-container {
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

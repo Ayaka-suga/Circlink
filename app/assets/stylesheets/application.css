@@ -1,0 +1,352 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+/* 全体初期化 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: #f4f7f9;
+  color: #333333;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* 共通ヘッダー */
+.app-header {
+  height: 60px;
+  background-color: #2b88eb;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  z-index: 100;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo a {
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 800;
+  text-decoration: none;
+  letter-spacing: -0.5px;
+}
+
+.active-group-badge {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.btn-logout {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 14px;
+  opacity: 0.9;
+  transition: opacity 0.2s;
+}
+
+.btn-logout:hover {
+  opacity: 1;
+}
+
+/* メインフレーム (サイドバー + コンテンツ) */
+.app-body {
+  display: flex;
+  flex: 1;
+}
+
+/* サイドバー */
+.sidebar {
+  width: 230px;
+  background-color: #ffffff;
+  border-right: 1px solid #e9ecef;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.sidebar-nav ul {
+  list-style: none;
+}
+
+.nav-label {
+  display: block;
+  font-size: 11px;
+  font-weight: bold;
+  color: #a0aec0;
+  margin-bottom: 8px;
+  padding-left: 8px;
+}
+
+/* メインメニュー */
+.main-menu .nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  color: #2d3748;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  border-radius: 8px;
+  margin-bottom: 4px;
+  transition: all 0.2s;
+}
+
+.main-menu .nav-item:hover,
+.main-menu .nav-item.active {
+  background-color: #ebf8ff;
+  color: #2b88eb;
+}
+
+.sidebar-divider {
+  border: none;
+  border-top: 1px solid #edf2f7;
+  margin: 20px 0;
+}
+
+/* サブメニュー (主張を抑えたスタイル) */
+.nav-sub-label {
+  display: block;
+  font-size: 11px;
+  color: #cbd5e1;
+  margin: 12px 0 6px 8px;
+}
+
+.sub-menu .nav-sub-item {
+  display: block;
+  padding: 8px 10px;
+  font-size: 13px;
+  color: #718096;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.sub-menu .nav-sub-item:hover {
+  background-color: #f7fafc;
+  color: #4a5568;
+}
+
+.muted-link {
+  color: #a0aec0 !important;
+}
+
+/* メイン表示領域 */
+.main-content {
+  flex: 1;
+  padding: 32px;
+  max-width: 1200px;
+}
+
+/* フッター */
+.app-footer {
+  text-align: center;
+  padding: 16px;
+  font-size: 12px;
+  color: #a0aec0;
+  background-color: #ffffff;
+  border-top: 1px solid #edf2f7;
+}
+
+.sidebar-logo {
+  width: 100%;
+  padding: 22px 20px 20px;
+  box-sizing: border-box;
+}
+
+.sidebar-logo a {
+  display: block;
+  width: 100%;
+}
+
+.sidebar-logo img {
+  display: block;
+  width: 145px;
+  height: auto;
+  max-width: 100%;
+}
+
+/* ========================================
+   左固定サイドバー ＋ ヘッダー
+   ======================================== */
+
+:root {
+  --sidebar-width: 240px;
+  --header-height: 64px;
+}
+
+
+/* ----------------------------------------
+   サイドバー
+   ---------------------------------------- */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: var(--sidebar-width);
+  height: 100vh;
+
+  background-color: #ffffff;
+  border-right: 1px solid #e5e5e5;
+
+  box-sizing: border-box;
+
+  overflow-y: auto;
+
+  z-index: 1000;
+}
+
+
+/* ----------------------------------------
+   サイドバーのロゴ
+   ---------------------------------------- */
+
+.sidebar-logo {
+  width: 100%;
+
+  /* ★ ここでロゴの上下位置を調整 */
+  padding: 0px 24px 18px;
+  margin-top: -4px;
+}
+
+
+
+.sidebar-logo a {
+  display: block;
+  width: fit-content;
+}
+
+.sidebar-logo img {
+  display: block;
+
+  width: 160px;
+  height: auto;
+
+  max-width: 100%;
+}
+
+
+/* ----------------------------------------
+   ヘッダー
+   ---------------------------------------- */
+
+.app-header {
+  position: fixed;
+
+  top: 0;
+  left: var(--sidebar-width);
+  right: 0;
+
+  height: var(--header-height);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 32px;
+
+  background-color: #2f8de4;
+
+  box-sizing: border-box;
+
+  z-index: 900;
+}
+
+
+/* ヘッダー左側 */
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+
+/* 現在のサークル */
+.active-group-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 9px 18px;
+
+  background-color: rgba(255, 255, 255, 0.18);
+  border-radius: 22px;
+
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: bold;
+}
+
+
+/* ヘッダー右側 */
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+
+/* ログアウト */
+.btn-logout {
+  color: #ffffff;
+  text-decoration: none;
+
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.btn-logout:hover {
+  opacity: 0.75;
+}
+
+
+/* ----------------------------------------
+   メイン部分
+   ---------------------------------------- */
+
+.app-body {
+  margin-left: var(--sidebar-width);
+
+  min-height: 100vh;
+
+  box-sizing: border-box;
+}
+
+
+/* ヘッダー分だけ上から空ける */
+.main-content {
+  padding-top: var(--header-height);
+
+  min-height: 100vh;
+
+  box-sizing: border-box;
+}

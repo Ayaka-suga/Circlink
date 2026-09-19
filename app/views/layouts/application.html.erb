@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Circlink" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <!-- ヘッダー：ロゴ・現在のサークル表示・ログアウト等の最小限に整理 -->
+    <header class="app-header">
+      <div class="header-left">
+        <% if user_signed_in? && @current_group %>
+          <span class="active-group-badge">
+            📍 <%= @current_group.circle %>
+          </span>
+        <% end %>
+      </div>
+
+      <div class="header-right">
+        <% if user_signed_in? %>
+          <%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete }, class: "btn-logout" %>
+        <% else %>
+          <%= link_to "ログイン", new_user_session_path, class: "btn-auth" %>
+          <%= link_to "新規登録", new_user_registration_path, class: "btn-auth highlight" %>
+        <% end %>
+      </div>
+    </header>
+
+    <!-- メインレイアウト：サイドバー ＋ コンテンツ -->
+    <div class="app-body">
+      <% if user_signed_in? %>
+        <aside class="sidebar">
+            <!-- Circlink ロゴ -->
+          <div class="sidebar-logo">
+            <%= link_to root_path do %>
+              <%= image_tag "circlink-logo.png", alt: "Circlink" %>
+            <% end %>
+          </div>
+
+          <!-- メイン機能（目立つ表示） -->
+          <nav class="sidebar-nav main-menu">
+            <span class="nav-label">メイン</span>
+            <ul>
+              <li><%= link_to "ホーム", homes_path, class: "nav-item" %></li>
+              <li><%= link_to "イベント一覧", tweets_path, class: "nav-item" %></li>
+              <li><%= link_to "カレンダー", calendar_tweets_path, class: "nav-item" %></li>
+            </ul>
+          </nav>
+
+          <hr class="sidebar-divider">
+
+          <!-- サブ機能：サークル操作（控えめ・主張を低くしたUI） -->
+          <nav class="sidebar-nav sub-menu">
+            <!-- サイドバーのサークル切り替え部分 -->
+            <% if current_user.groups.count > 1 %>
+              <span class="nav-sub-label">サークル切り替え</span>
+              <ul class="sub-group-list">
+                <% current_user.groups.each do |group| %>
+                  <% real_group_id = group.read_attribute(:id) %>
+                  <% unless real_group_id == @current_group&.id %>
+                    <li>
+                      <%= link_to group.circle, 
+                                  switch_group_path(id: real_group_id), 
+                                  data: { turbo: false }, 
+                                  class: "nav-sub-item btn-switch" %>
+                    </li>
+                  <% end %>
+                <% end %>
+              </ul>
+            <% end %>
+
+            <!-- サークル参加・作成（優先度を落とした灰色の薄いリンク） -->
+            <span class="nav-sub-label">管理</span>
+            <ul>
+              <li><%= link_to "＋ サークルに参加", groups_path, class: "nav-sub-item muted-link" %></li>
+              <li><%= link_to "＋ 新しいサークルを作成", new_group_path, class: "nav-sub-item muted-link" %></li>
+            </ul>
+          </nav>
+        </aside>
+      <% end %>
+
+      <!-- 各ページのメインビュー出力エリア -->
+      <main class="main-content">
+        <%= yield %>
+      </main>
+    </div>
+
+    <footer class="app-footer">
+      <p>Circlink All Rights Reserved.</p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,34 @@
+<div class="tweet">
+  <p><%= @tweet.event %></p>
+  <p><%= @tweet.category %></p>
+  <p><%= @tweet.datetime %></p>
+  <p><%= @tweet.about %></p>
+
+  <%# 1. いいね機能（ログインユーザー全員が押し分け可能） %>
+    <% if user_signed_in? %>
+        <% if current_user.already_liked?(@tweet) %>
+            <%= link_to tweet_like_path(id: @tweet.id, tweet_id: @tweet.id), data: { turbo_method: :delete } do %>
+                <p>いいねを取り消す</p><%= @tweet.likes.count %>
+            <% end %>
+        <% else %>
+            <%= link_to tweet_likes_path(id: @tweet.id, tweet_id: @tweet.id), data: { turbo_method: :post }  do %>
+                <p>いいね</p><%= @tweet.likes.count %>
+            <% end %>
+        <% end %>
+    <% else %>
+        <p>いいねの数 = </p><%= @tweet.likes.count %>
+    <% end %>
+
+  <%# 2. 編集・削除ボタン（投稿者本人のみ表示） %>
+  <% if user_signed_in? && current_user.id == @tweet.user_id %>
+    <%= link_to "編集する", edit_tweet_path(@tweet.id) %>
+    <%= link_to "削除する", tweet_path(@tweet.id), method: :delete %>
+  <% end %>
+</div>
+
+<h2>いいねしたユーザー</h2>
+<ul>
+  <% @tweet.liked_users.each do |user| %>
+    <li><%= user.email %></li>
+  <% end %>
+</ul>

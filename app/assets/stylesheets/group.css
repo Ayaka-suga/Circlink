@@ -1,0 +1,252 @@
+/* ========================================
+   Groups 共通
+   ======================================== */
+
+body {
+  background-color: #f5f7fa;
+}
+
+
+/* ページタイトル */
+h1 {
+  color: #333;
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0 0 24px;
+}
+
+
+/* ========================================
+   サークル一覧
+   ======================================== */
+
+/* 「サークル作成」リンク */
+h1 + a {
+  display: inline-block;
+
+  padding: 10px 20px;
+
+  background-color: #0099ff;
+  color: #ffffff;
+
+  border-radius: 8px;
+
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+
+  margin-bottom: 24px;
+
+  transition: background-color 0.2s;
+}
+
+h1 + a:hover {
+  background-color: #0088e6;
+}
+
+
+/* サークル一覧の各項目 */
+h1 + a + p,
+h1 + a + p + p,
+h1 + a + p + p + p,
+h1 + a + p + p + p + p,
+h1 + a + p + p + p + p + p {
+  margin: 0 0 10px;
+}
+
+
+/* サークル名 */
+p a {
+  display: block;
+
+  padding: 16px 20px;
+
+  background-color: #ffffff;
+
+  border: 1.5px solid #e0e0e0;
+  border-radius: 12px;
+
+  color: #333;
+  text-decoration: none;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  box-sizing: border-box;
+
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    transform 0.1s;
+}
+
+p a:hover {
+  border-color: #0099ff;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+
+  transform: translateY(-1px);
+}
+
+
+/* ========================================
+   サークル作成画面
+   ======================================== */
+
+/* form */
+form {
+  width: 100%;
+  max-width: 600px;
+
+  padding: 32px;
+
+  background-color: #ffffff;
+
+  border: 1.5px solid #e0e0e0;
+  border-radius: 16px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+
+  box-sizing: border-box;
+}
+
+
+/* ラベル */
+form label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #444;
+
+  font-size: 14px;
+  font-weight: bold;
+}
+
+
+/* サークル名入力欄 */
+form input[type="text"] {
+  display: block;
+
+  width: 100%;
+
+  padding: 11px 14px;
+
+  box-sizing: border-box;
+
+  background-color: #ffffff;
+
+  border: 1px solid #ccc;
+  border-radius: 8px;
+
+  color: #333;
+
+  font-size: 15px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+
+form input[type="text"]:focus {
+  border-color: #0099ff;
+
+  box-shadow: 0 0 0 3px rgba(0, 153, 255, 0.12);
+}
+
+
+/* 作成ボタン */
+form input[type="submit"] {
+  margin-top: 20px;
+
+  padding: 11px 24px;
+
+  background-color: #0099ff;
+  color: #ffffff;
+
+  border: none;
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: background-color 0.2s;
+}
+
+
+form input[type="submit"]:hover {
+  background-color: #0088e6;
+}
+
+
+/* ========================================
+   サークル詳細画面
+   ======================================== */
+
+/* show画面の「イベントを作成」ボタン */
+
+
+
+/* 「参加済み」 */
+p {
+  color: #666;
+  font-size: 14px;
+}
+
+h1 + a {
+  display: inline-block;
+}
+
+/* 参加ボタン */
+button {
+  padding: 10px 24px;
+
+  background-color: #0099ff;
+  color: #ffffff;
+
+  border: none;
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: background-color 0.2s;
+}
+
+
+button:hover {
+  background-color: #0088e6;
+}
+
+
+/* ========================================
+   スマホ対応
+   ======================================== */
+
+@media (max-width: 600px) {
+
+  h1 {
+    font-size: 24px;
+  }
+
+  form {
+    padding: 24px 20px;
+  }
+
+  h1 + a {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  form input[type="submit"] {
+    width: 100%;
+  }
+}

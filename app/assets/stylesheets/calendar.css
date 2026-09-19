@@ -1,0 +1,127 @@
+/* カレンダーの外枠コンテナ（横スクロールを許可） */
+.calendar-container {
+  width: 100%;
+  max-width: 1200px; /* 必要に応じて調整可能 */
+  margin: 30px auto;
+  padding: 0 15px;
+  overflow-x: auto; /* 画面が狭くなっても潰さずに横スクロールさせる */
+  box-sizing: border-box;
+}
+
+/* カレンダー本体（.simple-calendar から .simple-calendar table に変更） */
+.simple-calendar table {
+  width: 100%;
+  min-width: 750px; /* カレンダーが潰れない最小幅をしっかり確保 */
+  table-layout: fixed; /* 列の幅を強制固定 */
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* 各曜日のセル幅を常に1/7（14.285%）に完全固定 */
+.simple-calendar th,
+.simple-calendar td {
+  width: 14.285% !important;
+  box-sizing: border-box;
+}
+
+.simple-calendar .calendar-heading {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* 曜日ヘッダー */
+.simple-calendar th {
+  background-color: #007bff;
+  color: #ffffff;
+  padding: 12px 0;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* 日付セル */
+.simple-calendar td {
+  height: 110px; /* 日付枠の高さを十分確保 */
+  vertical-align: top;
+  border: 1px solid #e9ecef;
+  padding: 6px;
+  background-color: #ffffff;
+}
+
+.simple-calendar .today {
+  background-color: #e7f5ff;
+}
+
+.day-number {
+  font-size: 14px;
+  font-weight: bold;
+  color: #495057;
+  margin-bottom: 4px;
+}
+
+/* カレンダー内のイベントリンク */
+.event-item a {
+  display: block;
+  font-size: 12px;
+  background-color: #17a2b8;
+  color: #ffffff;
+  padding: 3px 6px;
+  border-radius: 4px;
+  text-decoration: none;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.event-item a:hover {
+  background-color: #138496;
+}
+
+/* テーブルのスタイル */
+.table-title {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.events-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.events-table th, .events-table td {
+  border: 1px solid #dee2e6;
+  padding: 12px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.events-table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+.events-table tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.btn-link {
+  margin-right: 8px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.btn-link.text-danger {
+  color: #dc3545;
+}

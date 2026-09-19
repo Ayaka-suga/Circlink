@@ -1,0 +1,7 @@
+<h1>新しいサークルを作成</h1> 
+
+<%= form_for @group do |f| %>
+    <%= f.label :circle, "サークル名" %>
+    <%= f.text_field :circle %> 
+    <%= f.submit "作成" %> 
+<% end %>

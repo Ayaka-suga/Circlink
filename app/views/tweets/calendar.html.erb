@@ -1,0 +1,43 @@
+<div class="calendar-container">
+  <%= month_calendar events: @tweets, attribute: :start_time do |date, tweets| %>
+    <div class="day-number"><%= date.day %></div>
+
+    <div class="events-list">
+      <% tweets.each do |tweet| %>
+        <div class="event-item">
+          <%= link_to tweet.event, tweet_path(tweet) %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<div class="events-table-container">
+  <h2 class="table-title">イベント一覧</h2>
+  <table class="events-table">
+    <thead>
+      <tr>
+        <th>イベント名</th>
+        <th>時間</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @tweets.present? %>
+        <% @tweets.each do |tweet| %>
+          <tr>
+            <td><%= tweet.event %></td>
+            <td><%= tweet.start_time&.strftime("%Y/%m/%d %H:%M") || "日時未定" %></td>
+            <td>
+              <%= link_to "詳細", tweet_path(tweet), class: "btn-link" %>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="3">登録されているイベントはありません。</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,70 @@
+<div class="main-content">
+  <h2 class="page-title">イベント作成</h2>
+
+  <%= form_with model: @tweet, local: true do |f| %>
+    <!-- 基本情報 -->
+    <div class="section-title">基本情報</div>
+
+    <div class="form-group">
+      <%= f.label :event, "イベント名", class: "form-label" %>
+      <%= f.text_field :event, placeholder: "イベント名を入力", class: "form-control" %>
+    </div>
+
+    <!-- 横並び選択式カテゴリ -->
+    <div class="form-group">
+      <%= f.label :category, "カテゴリ", class: "form-label" %>
+      <div class="category-options">
+        <% ["通常活動", "イベント・行事", "その他"].each do |cat| %>
+          <label class="category-card">
+            <%= f.radio_button :category, cat, class: "category-radio" %>
+            <span class="category-btn"><%= cat %></span>
+          </label>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- カレンダー＆時間選択ピッカー -->
+    <div class="form-group">
+      <%= f.label :start_time, "日時", class: "form-label" %>
+      <div class="datetime-picker-group">
+        <%= f.datetime_local_field :start_time, class: "input-datetime" %>
+        <span class="range-separator">〜</span>
+        <%= f.datetime_local_field :end_time, class: "input-datetime" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :place, "場所", class: "form-label" %>
+      <%= f.text_field :place, placeholder: "場所を入力", class: "form-control" %>
+    </div>
+
+    <!-- 出欠設定 -->
+    <div class="section-title">出欠設定</div>
+
+    <div class="form-group">
+      <%= f.label :deadline, "回答締切", class: "form-label" %>
+      <%= f.datetime_local_field :deadline, class: "input-datetime" %>
+    </div>
+
+    <!-- 詳細 -->
+    <div class="section-title">詳細</div>
+
+    <div class="form-group">
+      <%= f.label :about, "イベントの説明", class: "form-label" %>
+      <%= f.text_area :about, placeholder: "イベントの詳細を入力", class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :image, "画像 (任意)", class: "form-label" %>
+      <%= f.file_field :image, class: "form-control" %>
+    </div>
+
+    <!-- アクションボタン -->
+    <div class="form-actions">
+      <%= link_to "キャンセル", tweets_path, class: "btn-cancel" %>
+      <%= f.submit "完了", class: "btn-submit" %>
+    </div>
+  <% end %>
+</div>
+
+<%= button_to "イベントを削除する", tweet_path(@tweet.id), method: :delete %>

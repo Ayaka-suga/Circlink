@@ -17,7 +17,6 @@
         <td><%= blog.title %></td>
         <td><%= blog.start_time&.strftime("%Y-%m-%d %H:%M") %></td>
         <td><%= link_to 'Show', blog %></td>
-        <td><%= link_to 'Edit', edit_blog_path(blog.id) %></td>
         <td><%= link_to 'Destroy',blog_path(blog.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
@@ -37,5 +36,3 @@
     </div>
   <% end %>
 <% end %>
-
-<%= link_to "イベント一覧に戻る",tweets_path %>

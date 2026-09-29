@@ -30,10 +30,10 @@
 
       <div class="header-right">
         <% if user_signed_in? %>
-          <%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete }, class: "btn-logout" %>
+          <%= link_to "ログアウト", "/users/sign_out", data: { turbo_method: :delete }, class: "btn-logout" %>
         <% else %>
-          <%= link_to "ログイン", new_user_session_path, class: "btn-auth" %>
-          <%= link_to "新規登録", new_user_registration_path, class: "btn-auth highlight" %>
+          <%= link_to "ログイン", "/users/sign_in", class: "btn-auth" %>
+          <%= link_to "新規登録", "/users/sign_up", class: "btn-auth highlight" %>
         <% end %>
       </div>
     </header>
